@@ -1,0 +1,60 @@
+body {
+    background-color: #F1F0FF;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.proposal-details {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+.detail h4 {
+    color: #4F1060;
+    font-weight: 700;
+}
+
+.detail p {
+    color: #4F1060;
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+.buttons {
+    margin-top: 30px;
+}
+
+.buttons button {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.buttons .btn-primary {
+    background-color: #443266;
+    border: none;
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+.buttons .btn-primary:hover {
+    background-color: #372857;
+}
+
+.buttons .btn-secondary {
+    background-color: #7F95E4;
+    border: none;
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+.buttons .btn-secondary:hover {
+    background-color: #6B7CC2;
+}

@@ -1,0 +1,35 @@
+body {
+  background-color: #F1F0FF !important; /* Set background color to #F1F0FF */
+}
+
+.container {
+  background-color: #7F95E4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  max-width: 600px; /* Make the container wider */
+  position: relative; /* Set container as the positioning context */
+}
+
+.form-group label {
+  color: #F1F0FF;
+}
+
+/* Set the width of form elements to match text boxes */
+.container input[type="text"],
+.container textarea,
+.container input[type="file"] {
+  width: 100%; /* Make textboxes fill the entire container width */
+}
+
+/* Style the submit button */
+.container .btn-primary {
+  background-color: #443266; /* Changed button color */
+  border-color: #443266; /* Changed button border color */
+  padding: 10px 20px; /* Adjusted padding for larger button */
+  font-size: 1.2em; /* Increased font size for larger button */
+  position: absolute; /* Position button absolutely */
+  bottom: 10px; /* Position button 10px from the bottom */
+  right: 10px; /* Position button 10px from the right */
+}

@@ -1,0 +1,35 @@
+body {
+    background-color: #F1F0FF;
+}
+
+.card {
+    border: none;
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0;
+}
+
+.table {
+    border-radius: 10px;
+}
+
+.bg-forms th {
+    background-color: #7F95E4 !important;
+    color: white;
+}
+
+.bg-custom {
+    background-color: #443266 !important;
+}
+
+.btn-outline-forms {
+    color: #443266;
+    border-color: #443266;
+}
+
+.btn-outline-forms:hover {
+    color: #FFFFFF;
+    background-color: #443266;
+    border-color: #443266;
+}

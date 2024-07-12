@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Account</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/settings.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="title-box">
+      <h1 class="text-center">Manage Account</h1>
+    </div>
+    <section class="account-info mt-5">
+      <h2>Account Information</h2>
+      <div class="info">
+        <p><strong>Name:</strong> <span id="user-name"></span></p>
+        <p><strong>College/Office:</strong> <span id="user-college"></span></p>
+        <p><strong>University Email:</strong> <span id="user-email"></span></p>
+      </div>
+      <div class="password-change mt-5">
+        <h2>Change Password</h2>
+        <form id="password-change-form">
+          <div class="form-group">
+            <label for="old-password">Old Password</label>
+            <input type="password" class="form-control smaller-textbox" id="old-password" name="old_password" required>
+          </div>
+          <div class="form-group">
+            <label for="new-password">New Password</label>
+            <input type="password" class="form-control smaller-textbox" id="new-password" name="new_password" required>
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" class="form-control smaller-textbox" id="confirm-password" name="confirm_password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Change Password</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      // Fetch user info
+      $.ajax({
+        type: 'GET',
+        url: '../../controller/proposer/get_user_info.php',
+        dataType: 'json',
+        success: function(response) {
+          if (response.status === 'success') {
+            $('#user-name').text(response.data.full_name);
+            $('#user-college').text(response.data.college_office);
+            $('#user-email').text(response.data.university_email);
+          } else {
+            alert(response.message);
+          }
+        },
+        error: function(xhr, status, error) {
+          alert('An error occurred while fetching user information.');
+        }
+      });
+
+      // Handle password change
+      $('#password-change-form').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+          type: 'POST',
+          url: '../../controller/proposer/change_password.php',
+          data: formData,
+          dataType: 'json',
+          success: function(response) {
+            alert(response.message);
+            if (response.status === 'success') {
+              $('#password-change-form')[0].reset();
+            }
+          },
+          error: function(xhr, status, error) {
+            alert('An error occurred while changing the password.');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

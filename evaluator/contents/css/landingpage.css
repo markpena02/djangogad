@@ -1,0 +1,78 @@
+body {
+    background-color: #F1F0FF;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  header h1 {
+    color: #443266;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  section {
+    margin-bottom: 50px;
+  }
+  
+  h2 {
+    color: #443266;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .submission, .proposal {
+    background-color: #7F95E4;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .submission h3, .proposal h3 {
+    margin-top: 0;
+  }
+  
+  .submission p, .proposal p {
+    margin-bottom: 0;
+  }
+  
+  .submission button, .proposal button {
+    background-color: #443266;
+    border-color: #443266;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submission button:hover, .proposal button:hover {
+    background-color: #4F1060;
+  }
+  
+  #submissions button.btn-info {
+    margin-top: 20px;
+  }
+  
+  .btn-color {
+    background-color: #443266;
+    border-color: #443266;
+  }
+  
+  .btn-color:hover {
+    background-color: #4F1060;
+    border-color: #4F1060;
+  }
+  
+  .header-box {
+    background-color: #443266;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 15px;
+    margin-bottom: 20px;
+  }
+  

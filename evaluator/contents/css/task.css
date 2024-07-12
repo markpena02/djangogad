@@ -1,0 +1,43 @@
+body {
+    background: #F1F0FF;
+    color: #4F1060;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .task-form {
+    background: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #8D876B;
+  }
+  
+  .task-item {
+    margin-bottom: 20px;
+  }
+  
+  .task-item h4 {
+    color: #443266;
+  }
+  
+  .task-item p {
+    color: #4F1060;
+  }
+  
+  .btn-primary {
+    background-color: #443266;
+    border-color: #443266;
+  }
+  
+  .btn-primary:hover {
+    background-color: #8C52FF;
+    border-color: #8C52FF;
+  }
+  
+  .btn-primary:focus,
+  .btn-primary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(140, 82, 255, 0.5);
+  }
+  

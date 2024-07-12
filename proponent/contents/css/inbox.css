@@ -1,0 +1,27 @@
+/* css/inbox.css */
+
+/* Override Bootstrap styles */
+.jumbotron {
+    background-color: #443266 !important;
+    color: white !important;
+    border-radius: 10px !important;
+  }
+  
+  .table {
+    background-color: #7F95E4 !important;
+    color: white !important;
+    border-radius: 10px !important;
+  }
+  
+  .btn-dark {
+    background-color: #443266 !important;
+    color: white !important;
+    border-radius: 5px !important;
+  }
+  
+  /* Make text white */
+  .table th,
+  .table td {
+    color: white;
+  }
+  

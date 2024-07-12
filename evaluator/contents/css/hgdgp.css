@@ -1,0 +1,41 @@
+body {
+    background-color: #F1F0FF;
+    color: white;
+}
+
+.title-box {
+    background-color: #443266;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #443266;
+}
+
+.form-container {
+    background-color: #7F95E4;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #443266;
+}
+
+.instructions {
+    border-left: 4px solid #443266;
+    padding-left: 10px;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: #443266;
+    border-color: #443266;
+}
+
+.btn-primary:hover {
+    background-color: #443266;
+    border-color: #443266;
+}
+.form-container {
+    background-color: #7F95E4;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #443266;
+    margin-bottom: 20px; /* Added margin to create a gap below the form */
+}

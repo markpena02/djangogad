@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pending Evaluation</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/pending.css">
+</head>
+<body style="background-color: #F1F0FF;">
+
+<div class="container mt-5">
+  <div class="title-box">
+    <h1 class="text-center">Pending Evaluations</h1>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" id="search-box" placeholder="Search...">
+  </div>
+  <div class="table-container">
+    <table id="proposal-table" class="table">
+      <thead>
+        <tr>
+          <th>TITLE OF PROPOSAL</th>
+          <th>ACTION</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Proposal data will be inserted here dynamically -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    // Make AJAX request to fetch proposal data
+    $.ajax({
+      url: '../../controller/evaluator/fetch_proposal.php',
+      type: 'GET',
+      dataType: 'json',
+      success: function(response) {
+        // console.log(response)
+        // Process the response and update the table
+        if(response.length > 0) {
+          var tableRows = '';
+          $.each(response, function(index, proposal) {
+            tableRows += '<tr>';
+            tableRows += '<td>' + proposal.title + '</td>';
+            tableRows += '<td><a href="proposal_details.html?id=' + proposal.id + '" class="btn btn-view">View</a></td>';
+            tableRows += '</tr>';
+          });
+          $('#proposal-table tbody').html(tableRows);
+        } else {
+          $('#proposal-table tbody').html('<tr><td colspan="2">No proposals found</td></tr>');
+        }
+
+        // Implement search functionality
+        $('#search-box').on('keyup', function() {
+          var value = $(this).val().toLowerCase();
+          $('#proposal-table tbody tr').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+          });
+        });
+      },
+      error: function(xhr, status, error) {
+        console.error('Error:', error);
+        $('#proposal-table tbody').html('<tr><td colspan="2">Error fetching proposals</td></tr>');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

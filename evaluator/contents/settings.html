@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Account</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/settings.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="title-box">
+      <h1 class="text-center">Manage Account</h1>
+    </div>
+    <section class="account-info mt-5">
+      <h2>Account Information</h2>
+      <div class="info">
+        <p><strong>Name:</strong> <span id="user-name">Loading...</span></p>
+        <p><strong>University Email:</strong> <span id="user-email">Loading...</span></p>
+      </div>
+      <div class="password-change mt-5">
+        <h2>Change Password</h2>
+        <div class="form-group">
+          <label for="old-password">Old Password</label>
+          <input type="password" class="form-control smaller-textbox" id="old-password">
+        </div>
+        <div class="form-group">
+          <label for="new-password">New Password</label>
+          <input type="password" class="form-control smaller-textbox" id="new-password">
+        </div>
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" class="form-control smaller-textbox" id="confirm-password">
+        </div>
+        <button type="button" class="btn btn-primary" id="change-password-btn">Change Password</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      // Fetch user information
+      $.ajax({
+        type: 'GET',
+        url: '../../controller/evaluator/get_user_info.php',
+        dataType: 'json',
+        success: function(response) {
+          if (response.status === 'success') {
+            $('#user-name').text(response.data.full_name);
+            $('#user-email').text(response.data.university_email);
+          } else {
+            alert(response.message);
+            console.error('Debug Info:', response.debug);
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('Error:', xhr.responseText);
+        }
+      });
+
+      // Change password
+      $('#change-password-btn').click(function() {
+        var oldPassword = $('#old-password').val();
+        var newPassword = $('#new-password').val();
+        var confirmPassword = $('#confirm-password').val();
+
+        if (newPassword !== confirmPassword) {
+          alert('New passwords do not match.');
+          return;
+        }
+
+        $.ajax({
+          type: 'POST',
+          url: '../../controller/evaluator/change_password.php',
+          data: {
+            old_password: oldPassword,
+            new_password: newPassword
+          },
+          dataType: 'json',
+          success: function(response) {
+            alert(response.message);
+          },
+          error: function(xhr, status, error) {
+            console.error('Error:', xhr.responseText);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

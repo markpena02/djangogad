@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Submission</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/track.css">
+</head>
+<body style="background-color: #F1F0FF;">
+
+<div class="container mt-5">
+  <div class="title-box">
+    <h1 class="text-center">Track Your Submission</h1>
+  </div>
+  <form>
+    <div class="form-group">
+      <input type="text" class="form-control" id="search-box" placeholder="Search...">
+    </div>
+    <div class="table-container">
+      <table class="table" id="submission-table">
+        <thead>
+          <tr>
+            <th>Proposal Number</th>
+            <th>Title</th>
+            <th>Proponent/s</th>
+            <th>Office/Unit</th>
+            <!--<th>Description</th>-->
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Make AJAX request to fetch proposal data
+    $.ajax({
+        url: "../../controller/proposer/fetch_proposal.php",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            // Iterate through each proposal and populate the table
+            $.each(data, function(index, proposal) {
+                var newRow = "<tr>" +
+                                "<td>" + proposal.id + "</td>" +
+                                "<td>" + proposal.title + "</td>" +
+                                "<td>" + proposal.proponent_name + "</td>" +
+                                "<td>" + proposal.office + "</td>" +
+                                //"<td>" + proposal.description + "</td>" +
+                                "<td>" + proposal.status + "</td>" +
+                                "<td><a href='proposal_details.html?id=" + proposal.id + "' class='btn btn-view'>View</a></td>" +
+                             "</tr>";
+                $("#submission-table tbody").append(newRow);
+            });
+
+            // Implement search functionality
+            $('#search-box').on('keyup', function() {
+                var value = $(this).val().toLowerCase();
+                $('#submission-table tbody tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching proposal data:", status, error);
+        }
+    });
+});
+</script>
+
+</body>
+</html>
