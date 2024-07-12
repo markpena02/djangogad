@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pending Evaluation</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/pending.css">
+</head>
+<body style="background-color: #F1F0FF;">
+
+<div class="container mt-5">
+  <div class="title-box">
+    <h1 class="text-center">EVALUATIONS</h1>
+  </div>
+  <div class="table-container">
+    <table id="proposal-table" class="table table-striped">
+      <thead>
+        <tr>
+          <th>TITLE OF PROPOSAL</th>
+          <th>NAME OF THE PROPONENT/S</th>
+          <th>PROGRAM/PROJECT DESCRIPTION</th>
+          <th>ASSIGNED EVALUATOR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Proposal data will be inserted here dynamically -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  var evaluators = []; // Global variable to store evaluators
+
+  $(document).ready(function() {
+    // Fetch evaluators
+    $.ajax({
+      url: '../../controller/admin/fetch_evaluators.php',
+      type: 'GET',
+      dataType: 'json',
+      success: function(response) {
+        console.log(response);
+        // Process the response and update the global evaluators array
+        evaluators = response;
+        
+        // Fetch proposal data after fetching evaluators
+        fetchProposalData();
+      },
+      error: function(xhr, status, error) {
+        console.error('Error fetching evaluators:', error);
+      }
+    });
+  });
+
+  function fetchProposalData() {
+    // Make AJAX request to fetch proposal data
+    $.ajax({
+      url: '../../controller/admin/fetch_proposal.php',
+      type: 'GET',
+      dataType: 'json',
+      success: function(response) {
+        console.log(response);
+        // Process the response and update the table
+        if(response.length > 0) {
+          $.each(response, function(index, proposal) {
+            var shortDescription = proposal.description.substring(0, 100) + '...';
+            var fullDescription = proposal.description;
+            var tableRows = '<tr>';
+            tableRows += '<td>' + proposal.title + '</td>';
+            tableRows += '<td>' + proposal.proponent_name + '</td>';
+            tableRows += '<td><div class="description" data-full-text="' + fullDescription + '" data-short-text="' + shortDescription + '">' + shortDescription + ' <a href="#" class="toggle-description">Read More</a></div></td>';
+            tableRows += '<td>';
+
+            // Check if evaluator is assigned
+            if (proposal.evaluator_id !== 0) {
+              var assignedEvaluator = evaluators.find(function(evaluator) {
+                return evaluator.id === proposal.evaluator_id;
+              });
+
+              if (assignedEvaluator) {
+                tableRows += assignedEvaluator.name;
+              } else {
+                tableRows += '<div class="dropdown">';
+                tableRows += '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton' + proposal.id + '" data-bs-toggle="dropdown" aria-expanded="false">';
+                tableRows += 'Select Evaluator';
+                tableRows += '</button>';
+                tableRows += '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton' + proposal.id + '">';
+                $.each(evaluators, function(i, evaluator) {
+                  tableRows += '<a class="dropdown-item" href="#" onclick="selectEvaluator(this, ' + proposal.id + ')" data-id="' + evaluator.id + '">' + evaluator.name + '</a>';
+                });
+
+                tableRows += '</div>';
+                tableRows += '</div>';
+              }
+            } else {
+              tableRows += 'Not Assigned';
+            }
+
+            tableRows += '</td>'; // Close the column
+            tableRows += '</tr>'; // Close the row
+            $('#proposal-table tbody').append(tableRows);
+          });
+          
+          // Attach click event for Read More/Read Less links
+          $(document).on('click', '.toggle-description', function(e) {
+            e.preventDefault();
+            var descriptionDiv = $(this).parent();
+            var fullText = descriptionDiv.data('full-text');
+            var shortText = descriptionDiv.data('short-text');
+            var isExpanded = descriptionDiv.hasClass('expanded');
+
+            if (isExpanded) {
+              descriptionDiv.html(shortText + ' <a href="#" class="toggle-description">Read More</a>');
+            } else {
+              descriptionDiv.html(fullText + ' <a href="#" class="toggle-description">Read Less</a>');
+            }
+
+            descriptionDiv.toggleClass('expanded');
+          });
+
+        } else {
+          $('#proposal-table tbody').html('<tr><td colspan="4">No proposals found</td></tr>');
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('Error:', error);
+        $('#proposal-table tbody').html('<tr><td colspan="4">Error fetching proposals</td></tr>');
+      }
+    });
+  }
+
+  function selectEvaluator(element, proposalId) {
+    // Get the selected evaluator's ID and name
+    var selectedEvaluatorId = $(element).data('id');
+    var selectedEvaluatorName = $(element).text();
+
+    // Get the dropdown button
+    var dropdownButton = $(element).closest('.dropdown').find('.dropdown-toggle');
+
+    // Set the button text to the selected evaluator
+    dropdownButton.text(selectedEvaluatorName);
+
+    // Disable the dropdown
+    dropdownButton.prop('disabled', true);
+
+    // Send AJAX request to set the evaluator
+    $.ajax({
+      url: '../../controller/admin/set_evaluator.php',
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        evaluator_id: selectedEvaluatorId,
+        proposal_id: proposalId
+      },
+      success: function(response) {
+        console.log(response);
+        // Handle success response if necessary
+        console.log('Evaluator set successfully');
+      },
+      error: function(xhr, status, error) {
+        // Handle error response if necessary
+        console.error('Error setting evaluator:', error);
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

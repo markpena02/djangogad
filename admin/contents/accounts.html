@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Accounts</title>
+    <link rel="stylesheet" href="css/accounts.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Account Management</h1>
+        
+        <div class="evaluators">
+            <h2>Evaluators</h2>
+            <div class="table-container">
+                <table class="accounts-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>University Email</th>
+                            <th>Created At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be inserted here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            <a href="../contents/evaluator_signup.html" class="register-btn">Register an Evaluator Account</a>
+        </div>
+
+        <div class="proposers">
+            <h2>Users</h2>
+            <div class="table-container">
+                <table class="accounts-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>College/Office</th>
+                            <th>University Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be inserted here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            fetchEvaluators();
+            fetchProposers();
+        });
+
+        function fetchEvaluators() {
+            $.ajax({
+                url: '../../controller/admin/fetch_evaluators.php',
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    populateEvaluatorsTable(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching evaluators:', error);
+                }
+            });
+        }
+
+        function fetchProposers() {
+            $.ajax({
+                url: '../../controller/admin/fetch_proposers.php',
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    populateProposersTable(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching proposers:', error);
+                }
+            });
+        }
+
+        function populateEvaluatorsTable(data) {
+            var tableRows = '';
+            $.each(data, function(index, item) {
+                tableRows += '<tr>';
+                tableRows += '<td>' + item.id + '</td>';
+                tableRows += '<td>' + item.name + '</td>';
+                tableRows += '<td>' + item.university_email + '</td>';
+                tableRows += '<td>' + item.created_at + '</td>';
+                tableRows += '<td><button class="delete-btn btn btn-danger" data-id="' + item.id + '" data-name="' + item.name + '">Delete</button></td>';
+                tableRows += '</tr>';
+            });
+            $('.evaluators .accounts-table tbody').html(tableRows);
+            $('.evaluators .accounts-table tbody').on('click', '.delete-btn', function() {
+                var userId = $(this).data('id');
+                var evaluatorName = $(this).data('name');
+                deleteEvaluator(userId, evaluatorName);
+            });
+        }
+
+        function populateProposersTable(data) {
+            var tableRows = '';
+            $.each(data, function(index, item) {
+                tableRows += '<tr>';
+                tableRows += '<td>' + item.id + '</td>';
+                tableRows += '<td>' + item.name + '</td>';
+                tableRows += '<td>' + item.college_office + '</td>';
+                tableRows += '<td>' + item.university_email + '</td>';
+                tableRows += '<td><button class="delete-btn btn btn-danger" data-id="' + item.id + '" data-name="' + item.name + '">Delete</button></td>';
+                tableRows += '</tr>';
+            });
+            $('.proposers .accounts-table tbody').html(tableRows);
+            $('.proposers .accounts-table tbody').on('click', '.delete-btn', function() {
+                var userId = $(this).data('id');
+                var proposerName = $(this).data('name');
+                deleteProposer(userId, proposerName);
+            });
+        }
+
+        function deleteEvaluator(userId, evaluatorName) {
+            var confirmDelete = confirm("Are you sure you want to delete " + evaluatorName + "?");
+            if (confirmDelete) {
+                $.ajax({
+                    url: '../../controller/admin/delete_evaluator.php',
+                    type: 'POST',
+                    data: { id: userId },
+                    success: function(response) {
+                        // Here, we alert the user about the successful deletion
+                        alert("Evaluator " + evaluatorName + " deleted successfully!");
+                        console.log(response);
+                        // Empty the table first
+                        $('.evaluators .accounts-table tbody').empty();
+                        // Then fetch and populate the table
+                        fetchEvaluators(); // This will fetch the latest data and populate the table again
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error deleting evaluator:', error);
+                    }
+                });
+            }
+        }
+
+        function deleteProposer(userId, proposerName) {
+            var confirmDelete = confirm("Are you sure you want to delete " + proposerName + "?");
+            if (confirmDelete) {
+                $.ajax({
+                    url: '../../controller/admin/delete_proposer.php',
+                    type: 'POST',
+                    data: { id: userId },
+                    success: function(response) {
+                        // Here, we alert the user about the successful deletion
+                        alert("Proposer " + proposerName + " deleted successfully!");
+                        console.log(response);
+                        // Empty the table first
+                        $('.proposers .accounts-table tbody').empty();
+                        // Then fetch and populate the table
+                        fetchProposers(); // This will fetch the latest data and populate the table again
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error deleting proposer:', error);
+                    }
+                });
+            }
+        }
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMRF Automation System</title>
+    <link rel="stylesheet" href="../assets/css/styles-signup.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="signup-section">
+            <h2>Register an admin Account</h2>
+            <p>
+                <a href="signin.html" class="login-link">Already Registered? Login</a>
+            </p>
+
+            <form id="signup-form" class="signup-form">
+                <div class="form-group">
+                    <label for="full-name">Full Name (First name, Middle Initial, Last name):</label>
+                    <input type="text" id="full-name" name="full_name" required>
+                    <span class="error" id="full-name-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="university-email">University Email:</label>
+                    <input type="email" id="university-email" name="university_email" required>
+                    <span class="error" id="university-email-error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <span class="error" id="password-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm_password" required>
+                    <span class="error" id="confirm-password-error"></span>
+                </div>
+
+                <button type="submit" class="signup-button">SIGN UP</button>
+            </form>
+        </div>
+        <script>
+            $(document).ready(function() {
+                $('#signup-form').submit(function(event) {
+                    event.preventDefault(); // Prevent the default form submission
+
+                    // Clear previous error messages
+                    $('.error').text('');
+
+                    // Validate form inputs
+                    var isValid = true;
+                    var fullName = $('#full-name').val();
+                    var email = $('#university-email').val();
+                    var password = $('#password').val();
+                    var confirmPassword = $('#confirm-password').val();
+
+                    // Full name validation
+                    if (fullName.split(' ').length < 3) {
+                        $('#full-name-error').text('Please enter your full name including first name, middle initial, and last name.');
+                        isValid = false;
+                    }
+
+                    // Email validation
+                    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                    if (!emailPattern.test(email)) {
+                        $('#university-email-error').text('Please enter a valid email address.');
+                        isValid = false;
+                    }
+
+                    // Password validation
+                    if (password.length < 6) {
+                        $('#password-error').text('Password must be at least 6 characters long.');
+                        isValid = false;
+                    }
+
+                    // Confirm password validation
+                    if (password !== confirmPassword) {
+                        $('#confirm-password-error').text('Passwords do not match.');
+                        isValid = false;
+                    }
+
+                    // If the form is valid, submit it via AJAX
+                    if (isValid) {
+                        var formData = $(this).serialize();
+                        $.ajax({
+                            type: 'POST',
+                            url: '../controller/admin/create_admin.php',
+                            data: formData,
+                            success: function(response) {
+                                var jsonResponse = JSON.parse(response);
+                                alert(jsonResponse.message);
+                                if (jsonResponse.status === 'success') {
+                                    window.location.href = '../admin/signin.html';
+                                } else {
+                                    alert(jsonResponse.message);
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                alert('Error: ' + status + ' ' + error);
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

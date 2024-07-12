@@ -1,0 +1,57 @@
+body {
+    background-color: #F1F0FF;
+    color: #4F1060;
+}
+
+.custom-text-primary {
+    color: #4F1060 !important;
+}
+
+.custom-form-control {
+    background-color: #C3C3E5;
+    color: #4F1060;
+    border: 1px solid #7F95E4;
+}
+
+.custom-btn-primary {
+    background-color: #443266;
+    border-color: #443266;
+    color: #FFFFFF;
+}
+
+.custom-btn-primary:hover {
+    background-color: #4F1060;
+    border-color: #4F1060;
+}
+
+.custom-btn-secondary {
+    background-color: #443266;
+    border-color: #443266;
+    color: #FFFFFF;
+}
+
+.custom-btn-secondary:hover {
+    background-color: #4F1060;
+    border-color: #4F1060;
+}
+
+.custom-btn-success {
+    background-color: #4F1060;
+    border-color: #4F1060;
+    color: #FFFFFF;
+}
+
+.custom-btn-success:hover {
+    background-color: #443266;
+    border-color: #443266;
+}
+
+.custom-card {
+    background-color: #7F95E4;
+    color: #FFFFFF;
+}
+
+.custom-thead th {
+    background-color: #C3C3E5;
+    color: #4F1060;
+}

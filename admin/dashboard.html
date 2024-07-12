@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAD System</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/css/style-dashboard.css">
+    <!--<link rel="stylesheet" href="../css/table.css">-->
+    <link rel="icon" href="../assets/img/gad.png" type="image/png">
+</head>
+
+<body>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <a id="content-button" target="main-iframe"><img src="../assets/img/gad.png" alt="GAD System"></a>
+                </button>
+                <div class="sidebar-logo">
+                    <a href="../evaluator/contents/hgdgp.html" id="content-button" target="main-iframe">GMRF Automation System</a>
+                </div>
+            </div>
+            <ul class="sidebar-nav">    
+                <li class="sidebar-item">
+                    <a href="contents/evaluations.html" class="sidebar-link" id="evaluate-button" target="main-iframe">
+                        <i class="lni lni-user"></i>
+                        <span>Assign Evaluators</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="contents/gadanalysis.html" class="sidebar-link" id="track-button" target="main-iframe">
+                        <i class="lni lni-files"></i>
+                        <span>GAD Analysis</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="contents/office.html" class="sidebar-link" id="track-button" target="main-iframe">
+                        <i class="lni lni-apartment"></i>
+                        <span>Offices</span>
+                    </a>
+                </li>
+               <!--- <li class="sidebar-item">
+                    <a href="contents/logs.html" class="sidebar-link" id="logs-button" target="main-iframe">
+                        <i class="lni lni-files"></i>
+                        <span>Logs</span>
+                    </a>
+                </li>-->
+                <li class="sidebar-item">
+                    <a href="../evaluator/contents/hgdgp.html" class="sidebar-link" id="hgdg-button" target="main-iframe">
+                        <i class="lni lni-bar-chart"></i>
+                        <span>HGDG</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="contents/accounts.html" class="sidebar-link" id="settings-button" target="main-iframe">
+                        <i class="lni lni-users"></i>
+                        <span>Manage Accounts</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="contents/settings.html" class="sidebar-link" id="settings-button" target="main-iframe">
+                        <i class="lni lni-cog"></i>
+                        <span>Account Settings</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="signin.html" class="sidebar-link">
+                    <i class="lni lni-exit"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        <div class="main" id="main-content">
+            <!-- Create an iframe for displaying content -->
+            <iframe id="main-iframe" name="main-iframe" src="../evaluator/contents/hgdgp.html" width="100%" height="100%" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="welcomeModalLabel">Welcome Admin</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Welcome Admin, <span id="userName"></span>!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="../assets/js/script.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: 'GET',
+                url: '../controller/auth_check_admin.php',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'success') {
+                        $('#userName').text(response.user_name);
+                        var welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'));
+                        welcomeModal.show();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', xhr.responseText);
+                }
+            });
+
+            $('#logout-button').click(function (event) {
+                event.preventDefault(); // Prevent the default link behavior
+                $.ajax({
+                    type: 'POST',
+                    url: '../controller/auth_logout.php',
+                    dataType: 'json',
+                    success: function (response) {
+                        // Redirect to the login page
+                        window.location.href = 'signin.html';
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

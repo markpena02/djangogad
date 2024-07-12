@@ -1,0 +1,97 @@
+/* styles.css */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #443266; /* Updated background color */
+  height: 100vh; /* Full height of viewport */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.container {
+  display: flex;
+  justify-content: center; /* Center form horizontally */
+  align-items: flex-start; /* Align form to the top of the page */
+  padding-top: 20px; /* Equal padding above the form */
+  padding-bottom: 20px; /* Equal padding below the form */
+  width: 100%; /* Full width */
+}
+
+.signup-section {
+  width: 40%; /* Adjusted width of the form */
+  padding: 20px; /* Padding for better spacing */
+  color: #1C2120; /* Text color */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  background-color: #F1F0FF; /* Form background color */
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+.signup-section h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #443266; /* Dark purple */
+}
+
+.signup-section p {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: #443266;
+  margin-bottom: 20px;
+}
+
+.signup-section p .login-link {
+  color: #443266; /* Dark purple */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.signup-form .form-group {
+  margin-bottom: 12px;
+}
+
+.signup-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #1C2120; /* Label color */
+  width: 100%; /* Full width of the form group */
+  text-align: left; /* Align labels to the left */
+}
+
+.signup-form input,
+.signup-form textarea {
+  width: 95%; /* Adjusted width of form inputs and textareas */
+  padding: 8px; /* Padding */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  display: block;
+  margin: 0 auto; /* Center the text boxes */
+  transition: box-shadow 0.3s; /* Transition for focus effect */
+}
+
+.signup-form input:focus,
+.signup-form textarea:focus {
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Focus effect */
+}
+
+.signup-button {
+  width: 95%; /* Adjusted width of the button */
+  padding: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  background-color: #443266; /* Dark purple */
+  color: #F1F0FF; /* Text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Transition for hover effect */
+  margin-top: 20px; /* Margin above button */
+  display: block;
+  margin: 20px auto; /* Centering the button */
+}
+
+.signup-button:hover {
+  background-color: #362259; /* Darker shade on hover */
+}

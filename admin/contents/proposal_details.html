@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/newproposaldetails.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container my-5">
+        <div class="proposal-details">
+            <h1 class="text-center mb-4">Proposal Details</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="detail">
+                        <h4>TITLE OF PROPOSAL</h4>
+                        <p id="title"></p>
+                        <input type="text" id="title-input" class="form-control" style="display: none;">
+                    </div>
+                    <div class="detail">
+                        <h4>NAME OF THE PROPONENT/S</h4>
+                        <p id="proponent"></p>
+                        <input type="text" id="proponent-input" class="form-control" style="display: none;">
+                    </div>
+                    <div class="detail">
+                        <h4>OFFICE/UNIT</h4>
+                        <p id="office"></p>
+                        <input type="text" id="office-input" class="form-control" style="display: none;">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="detail">
+                        <h4>PROGRAM/PROJECT DESCRIPTION</h4>
+                        <p id="description"></p>
+                        <textarea id="description-input" class="form-control" rows="5" style="display: none;"></textarea>
+                    </div>
+                </div>
+                <button id="save-button" class="btn btn-primary" style="display: none;">Save</button>
+            </div>
+        </div>
+        <div class="buttons text-center mt-5">
+            <button id="view-evaluation-form" class="btn btn-secondary">View Evaluation Form</button>
+        </div>
+
+        <div class="resource-link mt-5">
+            <h4>Resources Document Link</h4>
+            <input type="text" class="form-control" value="https://drive.google.com/drive/u/0/folders/1iG_ebpklIkVbk7E7LvKvmrYfq4ba4RDG" readonly>
+        </div>
+
+        <div class="comment-box mt-5">
+            <h4>Comments</h4>
+            <div id="comments-section" class="mt-4 mb-4"></div>
+            <textarea id="comment-input" class="form-control" rows="3" placeholder="Add a comment..."></textarea>
+            <button id="submit-comment" class="btn btn-primary mt-2">Submit</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirm File Upload</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" id="file-input" multiple class="form-control mb-3">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirm-upload-button">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('#submit-comment').click(function(){
+                var comment = $('#comment-input').val();
+                if(comment) {
+                    $('#comments-section').prepend('<div class="comment mt-3 p-2 bg-light">'+ comment +'</div>');
+                    $('#comment-input').val('');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
