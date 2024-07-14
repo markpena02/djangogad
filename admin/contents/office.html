@@ -24,7 +24,18 @@
                         </tr>
                     </thead>
                     <tbody id="campusTableBody">
-                        <!-- Campus table rows will be inserted here -->
+                        <tr>
+                            <td>1</td>
+                            <td>Main Campus</td>
+                            <td>123 University Ave</td>
+                            <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Downtown Campus</td>
+                            <td>456 City Rd</td>
+                            <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                        </tr>
                     </tbody>
                 </table>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#campusModal">Add Campus</button>
@@ -41,7 +52,18 @@
                         </tr>
                     </thead>
                     <tbody id="collegeTableBody">
-                        <!-- College table rows will be inserted here -->
+                        <tr>
+                            <td>1</td>
+                            <td>College of Engineering</td>
+                            <td>Main Campus</td>
+                            <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>College of Arts</td>
+                            <td>Downtown Campus</td>
+                            <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                        </tr>
                     </tbody>
                 </table>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#collegeModal">Add College</button>
@@ -62,7 +84,20 @@
                         </tr>
                     </thead>
                     <tbody id="officeTableBody">
-                        <!-- Office table rows will be inserted here -->
+                        <tr>
+                            <td>1</td>
+                            <td>Office of Admissions</td>
+                            <td>Main Campus</td>
+                            <td>College of Arts</td>
+                            <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Office of Research</td>
+                            <td>Downtown Campus</td>
+                            <td>College of Engineering</td>
+                            <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                        </tr>
                     </tbody>
                 </table>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#officeModal">Add Office</button>
@@ -111,7 +146,8 @@
                         <div class="mb-3">
                             <label for="collegeCampus" class="form-label">Campus</label>
                             <select class="form-control" id="collegeCampus" required>
-                                <!-- Campus options will be inserted here -->
+                                <option value="1">Main Campus</option>
+                                <option value="2">Downtown Campus</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
@@ -137,13 +173,15 @@
                         <div class="mb-3">
                             <label for="officeCampus" class="form-label">Campus</label>
                             <select class="form-control" id="officeCampus" required>
-                                <!-- Campus options will be inserted here -->
+                                <option value="1">Main Campus</option>
+                                <option value="2">Downtown Campus</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="officeCollege" class="form-label">College</label>
                             <select class="form-control" id="officeCollege" required>
-                                <!-- College options will be inserted here -->
+                                <option value="1">College of Engineering</option>
+                                <option value="2">College of Arts</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>

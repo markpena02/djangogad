@@ -1,92 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manage Account</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/settings.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Offices</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/office.css">
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="title-box">
-      <h1 class="text-center">Manage Account</h1>
+    <div class="container">
+        <h1 class="text-center my-4">University Offices</h1>
+        
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h2>Campus</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Campus ID</th>
+                            <th>Campus</th>
+                            <th>Campus Address</th>
+                            <th>Created At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="campusTableBody">
+                        <tr>
+                            <td>1</td>
+                            <td>Main Campus</td>
+                            <td>123 University Ave</td>
+                            <td>2024-01-01</td>
+                            <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Downtown Campus</td>
+                            <td>456 City Rd</td>
+                            <td>2024-01-01</td>
+                            <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#campusModal">Add Campus</button>
+            </div>
+            <div class="col-md-6">
+                <h2>College</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>College ID</th>
+                            <th>College</th>
+                            <th>Campus</th>
+                            <th>Created At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="collegeTableBody">
+                        <tr>
+                            <td>1</td>
+                            <td>College of Engineering</td>
+                            <td>Main Campus</td>
+                            <td>2024-01-01</td>
+                            <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>College of Arts</td>
+                            <td>Downtown Campus</td>
+                            <td>2024-01-01</td>
+                            <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#collegeModal">Add College</button>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h2>Office</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Office ID</th>
+                            <th>Office</th>
+                            <th>Campus</th>
+                            <th>College</th>
+                            <th>Created At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="officeTableBody">
+                        <tr>
+                            <td>1</td>
+                            <td>Office of Admissions</td>
+                            <td>Main Campus</td>
+                            <td>College of Arts</td>
+                            <td>2024-01-01</td>
+                            <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Office of Research</td>
+                            <td>Downtown Campus</td>
+                            <td>College of Engineering</td>
+                            <td>2024-01-01</td>
+                            <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#officeModal">Add Office</button>
+            </div>
+        </div>
     </div>
-    <section class="account-info mt-5">
-      <h2>Account Information</h2>
-      <div class="info">
-        <p><strong>Name:</strong> <span id="user-name">Loading...</span></p>
-        <p><strong>University Email:</strong> <span id="user-email">Loading...</span></p>
-      </div>
-      <div class="password-change mt-5">
-        <h2>Change Password</h2>
-        <div class="form-group">
-          <label for="old-password">Old Password</label>
-          <input type="password" class="form-control smaller-textbox" id="old-password">
+
+    <!-- Modals -->
+    <div class="modal fade" id="campusModal" tabindex="-1" aria-labelledby="campusModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="campusModalLabel">Add Campus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="campusForm">
+                        <div class="mb-3">
+                            <label for="campusName" class="form-label">Campus Name</label>
+                            <input type="text" class="form-control" id="campusName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="campusAddress" class="form-label">Campus Address</label>
+                            <input type="text" class="form-control" id="campusAddress" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-          <label for="new-password">New Password</label>
-          <input type="password" class="form-control smaller-textbox" id="new-password">
+    </div>
+
+    <div class="modal fade" id="collegeModal" tabindex="-1" aria-labelledby="collegeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="collegeModalLabel">Add College</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="collegeForm">
+                        <div class="mb-3">
+                            <label for="collegeName" class="form-label">College Name</label>
+                            <input type="text" class="form-control" id="collegeName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="collegeCampus" class="form-label">Campus</label>
+                            <select class="form-control" id="collegeCampus" required>
+                                <option value="1">Main Campus</option>
+                                <option value="2">Downtown Campus</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-          <label for="confirm-password">Confirm Password</label>
-          <input type="password" class="form-control smaller-textbox" id="confirm-password">
+    </div>
+
+    <div class="modal fade" id="officeModal" tabindex="-1" aria-labelledby="officeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="officeModalLabel">Add Office</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="officeForm">
+                        <div class="mb-3">
+                            <label for="officeName" class="form-label">Office Name</label>
+                            <input type="text" class="form-control" id="officeName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="officeCampus" class="form-label">Campus</label>
+                            <select class="form-control" id="officeCampus" required>
+                                <option value="1">Main Campus</option>
+                                <option value="2">Downtown Campus</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="officeCollege" class="form-label">College</label>
+                            <select class="form-control" id="officeCollege" required>
+                                <option value="1">College of Engineering</option>
+                                <option value="2">College of Arts</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <button type="button" class="btn btn-primary" id="change-password-btn">Change Password</button>
-      </div>
-    </section>
-  </div>
+    </div>
 
-  <script>
-    $(document).ready(function() {
-      // Fetch user information
-      $.ajax({
-        type: 'GET',
-        url: '../../controller/admin/get_user_info.php',
-        dataType: 'json',
-        success: function(response) {
-          if (response.status === 'success') {
-            $('#user-name').text(response.data.full_name);
-            $('#user-email').text(response.data.university_email);
-          } else {
-            alert(response.message);
-            console.error('Debug Info:', response.debug);
-          }
-        },
-        error: function(xhr, status, error) {
-          console.error('Error:', xhr.responseText);
-        }
-      });
-
-      // Change password
-      $('#change-password-btn').click(function() {
-        var oldPassword = $('#old-password').val();
-        var newPassword = $('#new-password').val();
-        var confirmPassword = $('#confirm-password').val();
-
-        if (newPassword !== confirmPassword) {
-          alert('New passwords do not match.');
-          return;
-        }
-
-        $.ajax({
-          type: 'POST',
-          url: '../../controller/admin/change_password.php',
-          data: {
-            old_password: oldPassword,
-            new_password: newPassword
-          },
-          dataType: 'json',
-          success: function(response) {
-            alert(response.message);
-          },
-          error: function(xhr, status, error) {
-            console.error('Error:', xhr.responseText);
-          }
-        });
-      });
-    });
-  </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/office.js"></script>
 </body>
 </html>
