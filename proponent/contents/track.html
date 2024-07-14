@@ -32,6 +32,46 @@
         </thead>
         <tbody>
           <!-- Data will be dynamically added here -->
+          <tr>
+            <td>2023-001</td>
+            <td>Environmental Impact Study</td>
+            <td>Dr. John Doe, Prof. Jane Smith</td>
+            <td>Environmental Science Department</td>
+            <td>Under Review</td>
+            <td><button class="btn btn-primary">View</button></td>
+          </tr>
+          <tr>
+            <td>2023-002</td>
+            <td>Renewable Energy Solutions</td>
+            <td>Eng. Emily Clark</td>
+            <td>Engineering Department</td>
+            <td>Approved</td>
+            <td><button class="btn btn-primary">View</button></td>
+          </tr>
+          <tr>
+            <td>2023-003</td>
+            <td>AI in Healthcare</td>
+            <td>Dr. Michael Brown</td>
+            <td>Computer Science Department</td>
+            <td>Rejected</td>
+            <td><button class="btn btn-primary">View</button></td>
+          </tr>
+          <tr>
+            <td>2023-004</td>
+            <td>Sustainable Agriculture</td>
+            <td>Prof. Sarah Lee, Dr. David White</td>
+            <td>Agriculture Department</td>
+            <td>Pending</td>
+            <td><button class="btn btn-primary">View</button></td>
+          </tr>
+          <tr>
+            <td>2023-005</td>
+            <td>Advanced Robotics</td>
+            <td>Eng. Rachel Green</td>
+            <td>Mechanical Engineering Department</td>
+            <td>Approved</td>
+            <td><button class="btn btn-primary">View</button></td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -39,42 +79,6 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    // Make AJAX request to fetch proposal data
-    $.ajax({
-        url: "../../controller/proposer/fetch_proposal.php",
-        type: "GET",
-        dataType: "json",
-        success: function(data) {
-            // Iterate through each proposal and populate the table
-            $.each(data, function(index, proposal) {
-                var newRow = "<tr>" +
-                                "<td>" + proposal.id + "</td>" +
-                                "<td>" + proposal.title + "</td>" +
-                                "<td>" + proposal.proponent_name + "</td>" +
-                                "<td>" + proposal.office + "</td>" +
-                                //"<td>" + proposal.description + "</td>" +
-                                "<td>" + proposal.status + "</td>" +
-                                "<td><a href='proposal_details.html?id=" + proposal.id + "' class='btn btn-view'>View</a></td>" +
-                             "</tr>";
-                $("#submission-table tbody").append(newRow);
-            });
-
-            // Implement search functionality
-            $('#search-box').on('keyup', function() {
-                var value = $(this).val().toLowerCase();
-                $('#submission-table tbody tr').filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error("Error fetching proposal data:", status, error);
-        }
-    });
-});
-</script>
 
 </body>
 </html>
