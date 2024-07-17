@@ -383,7 +383,7 @@
                             data.forEach(function (campus) {
                                 officeCampus.append(new Option(campus.campus_name, campus.campus_id));
                             });
-                            changeOffice(data[0].campus_id);
+                            changeOffice(data.campus_id);
                         },
                     });
                 }
