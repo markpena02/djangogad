@@ -1,56 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GMRF Automation System</title>
-    <link rel="stylesheet" href="../assets/css/styles-signupnew.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-</head>
-<body>
-    <div class="container">
-        <div class="signup-section">
-            <h2>Register New Account</h2>
-            <p><a href="signin.html" class="login-link">Already Registered? Login</a></p>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>GMRF Automation System</title>
+        <link rel="stylesheet" href="../assets/css/styles-signup.css" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            .error {
+                color: red;
+                font-size: 0.9em;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="signup-section">
+                <h2>Register an User Account</h2>
+                <p>
+                    <a href="signin.html" class="login-link">Already Registered? Login</a>
+                </p>
 
-            <form id="signup-form" class="signup-form">
-                <div class="form-group">
-                    <label for="first-name">Full Name (First name, Middle initial, last name):</label>
-                    <input type="text" id="first-name" name="full_name" required>
-                </div>
+                <form id="signup-form" class="signup-form">
+                    <div class="form-group">
+                        <label for="full-name">Full Name (First name, Middle Initial, Last name):</label>
+                        <input type="text" id="full-name" name="full_name" required />
+                        <span class="error" id="full-name-error"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="college-office">Office/Department:</label>
-                    <select id="college-office" name="college_office" required>
-                        <option value="">Select an option</option>
-                        <option value="Department 1">Department 1</option>
-                        <option value="Department 2">Department 2</option>
-                        <option value="Department 3">Department 3</option>
-                        <!-- Add more options as needed -->
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label for="university-email">University Email:</label>
+                        <input type="email" id="university-email" name="university_email" required />
+                        <span class="error" id="university-email-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required />
+                        <span class="error" id="password-error"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="university-email">Email:</label>
-                    <input type="email" id="university-email" name="university_email" required>
-                </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password:</label>
+                        <input type="password" id="confirm-password" name="confirm_password" required />
+                        <span class="error" id="confirm-password-error"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="confirm-password">Confirm Password:</label>
-                    <input type="password" id="confirm-password" name="confirm_password" required>
-                </div>
-
-                <button type="submit" class="signup-button">SIGN UP</button>
-            </form>
+                    <button type="submit" class="signup-button">SIGN UP</button>
+                </form>
+            </div>
         </div>
-    </div>
+    </body>
+    <script>
+        $(document).ready(function () {
+            $("#signup-form").submit(function (event) {
+                event.preventDefault();
 
-    
-</body>
+                // Clear previous error messages
+                $(".error").text("");
+
+                // Get form data
+                const formData = {
+                    username: $("#university-email").val(),
+                    email: $("#university-email").val(),
+                    password: $("#password").val(),
+                    confirm_password: $("#confirm-password").val(),
+                    name: $("#full-name").val(),
+                    role: "proponent",
+                };
+
+                // Client-side validation
+                let valid = true;
+
+                if (!formData.username) {
+                    $("#university-email-error").text("University Email is required.");
+                    valid = false;
+                }
+
+                if (formData.password !== formData.confirm_password) {
+                    $("#confirm-password-error").text("Passwords do not match.");
+                    valid = false;
+                }
+
+                if (!valid) return;
+
+                // Submit form data to backend
+                $.ajax({
+                    url: "http://127.0.0.1:8000/auth/register/",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        alert("Registration successful!");
+                        // window.location.href = "signin.html";
+                    },
+                    error: function (xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            for (const [field, errors] of Object.entries(xhr.responseJSON.errors)) {
+                                $(`#${field}-error`).text(errors.join(", "));
+                            }
+                        } else {
+                            alert("An error occurred. Please try again.");
+                        }
+                    },
+                });
+            });
+        });
+    </script>
 </html>

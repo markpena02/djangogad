@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>University Offices</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/office.css" />
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="text-center my-4">University Offices</h1>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h2>Campus</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Campus ID</th>
+                                <th>Campus</th>
+                                <th>Campus Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="campusTableBody"></tbody>
+                    </table>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#campusModal">Add Campus</button>
+                </div>
+                <div class="col-md-6">
+                    <h2>College</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>College ID</th>
+                                <th>College</th>
+                                <th>Campus</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="collegeTableBody"></tbody>
+                    </table>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#collegeModal">Add College</button>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <h2>Office</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Office ID</th>
+                                <th>Office</th>
+                                <th>Campus</th>
+                                <th>College</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="officeTableBody"></tbody>
+                    </table>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#officeModal">Add Office</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <!-- Campus Modal -->
+        <div class="modal fade" id="campusModal" tabindex="-1" aria-labelledby="campusModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="campusModalLabel">Add/Edit Campus</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="campusForm">
+                            <div class="mb-3">
+                                <label for="campusName" class="form-label">Campus Name</label>
+                                <input type="text" class="form-control" id="campusName" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="campusAddress" class="form-label">Campus Address</label>
+                                <input type="text" class="form-control" id="campusAddress" required />
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <input type="hidden" id="campusId" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- College Modal -->
+        <div class="modal fade" id="collegeModal" tabindex="-1" aria-labelledby="collegeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="collegeModalLabel">Add/Edit College</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="collegeForm">
+                            <div class="mb-3">
+                                <label for="collegeName" class="form-label">College Name</label>
+                                <input type="text" class="form-control" id="collegeName" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="collegeCampus" class="form-label">Campus</label>
+                                <select class="form-control" id="collegeCampus" required></select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <input type="hidden" id="collegeId" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Office Modal -->
+        <div class="modal fade" id="officeModal" tabindex="-1" aria-labelledby="officeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="officeModalLabel">Add/Edit Office</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="officeForm">
+                            <div class="mb-3">
+                                <label for="officeName" class="form-label">Office Name</label>
+                                <input type="text" class="form-control" id="officeName" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="officeCampus" class="form-label">Campus</label>
+                                <select class="form-control" id="officeCampus" required></select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="officeCollege" class="form-label">College</label>
+                                <select class="form-control" id="officeCollege" required></select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <input type="hidden" id="officeId" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                const baseURL = "http://127.0.0.1:8000/api/";
+
+                loadCampuses();
+                loadColleges();
+                loadOffices();
+
+                $("#campusForm").on("submit", function (event) {
+                    event.preventDefault();
+                    const campusId = $("#campusId").val();
+                    const formData = {
+                        campus_name: $("#campusName").val(),
+                        campus_address: $("#campusAddress").val(),
+                    };
+
+                    if (campusId) {
+                        // Edit existing campus
+                        $.ajax({
+                            url: baseURL + "campuses/" + campusId + "/",
+                            method: "PUT",
+                            contentType: "application/json",
+                            data: JSON.stringify(formData),
+                            success: function () {
+                                alert("Campus updated successfully!");
+                                $("#campusModal").modal("hide");
+                                $("#campusForm")[0].reset();
+                                loadCampuses();
+                            },
+                            error: function (xhr, status, error) {
+                                alert("Error updating campus: " + error);
+                            },
+                        });
+                    } else {
+                        // Add new campus
+                        $.ajax({
+                            url: baseURL + "campuses/",
+                            method: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify(formData),
+                            success: function () {
+                                alert("Campus added successfully!");
+                                $("#campusModal").modal("hide");
+                                $("#campusForm")[0].reset();
+                                loadCampuses();
+                            },
+                            error: function (xhr, status, error) {
+                                alert("Error adding campus: " + error);
+                            },
+                        });
+                    }
+                });
+
+                function loadCampuses() {
+                    $.ajax({
+                        url: baseURL + "campuses/",
+                        method: "GET",
+                        success: function (data) {
+                            const campusTableBody = $("#campusTableBody");
+                            campusTableBody.empty();
+                            data.forEach((campus) => {
+                                campusTableBody.append(`
+                                <tr>
+                                    <td>${campus.campus_id}</td>
+                                    <td>${campus.campus_name}</td>
+                                    <td>${campus.campus_address}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning" onclick="editCampus('${campus.campus_id}', '${campus.campus_name}', '${campus.campus_address}')">Edit</button>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteCampus('${campus.campus_id}')">Delete</button>
+                                    </td>
+                                </tr>
+                            `);
+                            });
+
+                            $.ajax({
+                                url: baseURL + "colleges/",
+                                method: "GET",
+                                success: function (data) {
+                                    const collegeTableBody = $("#collegeTableBody");
+                                    collegeTableBody.empty();
+                                    data.forEach((college) => {
+                                        const campusName = college.campus.campus_name || "N/A";
+                                        collegeTableBody.append(`
+                                        <tr>
+                                            <td>${college.college_id}</td>
+                                            <td>${college.college_name}</td>
+                                            <td>${campusName}</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-warning" onclick="editCollege('${college.college_id}', '${college.college_name}', '${college.campus.campus_id}')">Edit</button>
+                                                <button class="btn btn-sm btn-danger" onclick="deleteCollege('${college.college_id}')">Delete</button>
+                                            </td>
+                                        </tr>
+                                    `);
+                                    });
+                                },
+                            });
+                        },
+                    });
+                }
+
+                $("#collegeForm").on("submit", function (event) {
+                    event.preventDefault();
+                    const collegeId = $("#collegeId").val();
+                    const formData = {
+                        college_name: $("#collegeName").val(),
+                        campus: $("#collegeCampus").val(),
+                    };
+
+                    if (collegeId) {
+                        // Edit existing college
+                        $.ajax({
+                            url: baseURL + "colleges/" + collegeId + "/",
+                            method: "PUT",
+                            contentType: "application/json",
+                            data: JSON.stringify(formData),
+                            success: function () {
+                                alert("College updated successfully!");
+                                $("#collegeModal").modal("hide");
+                                $("#collegeForm")[0].reset();
+                                loadColleges();
+                            },
+                            error: function (xhr, status, error) {
+                                alert("Error updating college: " + error);
+                            },
+                        });
+                    } else {
+                        // Add new college
+                        $.ajax({
+                            url: baseURL + "colleges/",
+                            method: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify(formData),
+                            success: function () {
+                                alert("College added successfully!");
+                                $("#collegeModal").modal("hide");
+                                $("#collegeForm")[0].reset();
+                                loadColleges();
+                            },
+                            error: function (xhr, status, error) {
+                                alert("Error adding college: " + error);
+                            },
+                        });
+                    }
+                });
+
+                function loadColleges() {
+                    $.ajax({
+                        url: baseURL + "campuses/",
+                        method: "GET",
+                        success: function (data) {
+                            const collegeCampus = $("#collegeCampus");
+                            collegeCampus.empty();
+                            data.forEach((campus) => {
+                                collegeCampus.append(
+                                    $("<option>", {
+                                        value: campus.campus_id,
+                                        text: campus.campus_name,
+                                    })
+                                );
+                            });
+
+                            $.ajax({
+                                url: baseURL + "colleges/",
+                                method: "GET",
+                                success: function (data) {
+                                    const collegeTableBody = $("#collegeTableBody");
+                                    collegeTableBody.empty();
+                                    data.forEach((college) => {
+                                        const campusName = college.campus.campus_name || "N/A";
+                                        collegeTableBody.append(`
+                                        <tr>
+                                            <td>${college.college_id}</td>
+                                            <td>${college.college_name}</td>
+                                            <td>${campusName}</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-warning" onclick="editCollege('${college.college_id}', '${college.college_name}', '${college.campus.campus_id}')">Edit</button>
+                                                <button class="btn btn-sm btn-danger" onclick="deleteCollege('${college.college_id}')">Delete</button>
+                                            </td>
+                                        </tr>
+                                    `);
+                                    });
+                                },
+                            });
+                        },
+                    });
+                }
+
+                $("#officeForm").on("submit", function (event) {
+                    event.preventDefault();
+                    const officeId = $("#officeId").val();
+                    const formData = {
+                        office_name: $("#officeName").val(),
+                        campus: $("#officeCampus").val(),
+                        college: $("#officeCollege").val(),
+                    };
+
+                    if (officeId) {
+                        // Edit existing office
+                        $.ajax({
+                            url: baseURL + "offices/" + officeId + "/",
+                            method: "PUT",
+                            contentType: "application/json",
+                            data: JSON.stringify(formData),
+                            success: function () {
+                                alert("Office updated successfully!");
+                                $("#officeModal").modal("hide");
+                                $("#officeForm")[0].reset();
+                                loadOffices();
+                            },
+                            error: function (xhr, status, error) {
+                                alert("Error updating office: " + error);
+                            },
+                        });
+                    } else {
+                        // Add new office
+                        $.ajax({
+                            url: baseURL + "offices/",
+                            method: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify(formData),
+                            success: function () {
+                                alert("Office added successfully!");
+                                $("#officeModal").modal("hide");
+                                $("#officeForm")[0].reset();
+                                loadOffices();
+                            },
+                            error: function (xhr, status, error) {
+                                alert("Error adding office: " + error);
+                            },
+                        });
+                    }
+                });
+
+                function loadOffices() {
+                    $.ajax({
+                        url: baseURL + "campuses/",
+                        method: "GET",
+                        success: function (data) {
+                            const officeCampus = $("#officeCampus");
+                            officeCampus.empty();
+                            data.forEach((campus) => {
+                                officeCampus.append(
+                                    $("<option>", {
+                                        value: campus.campus_id,
+                                        text: campus.campus_name,
+                                    })
+                                );
+                            });
+
+                            $.ajax({
+                                url: baseURL + "colleges/",
+                                method: "GET",
+                                success: function (data) {
+                                    const officeCollege = $("#officeCollege");
+                                    officeCollege.empty();
+                                    data.forEach((college) => {
+                                        officeCollege.append(
+                                            $("<option>", {
+                                                value: college.college_id,
+                                                text: college.college_name,
+                                            })
+                                        );
+                                    });
+
+                                    $.ajax({
+                                        url: baseURL + "offices/",
+                                        method: "GET",
+                                        success: function (data) {
+                                            const officeTableBody = $("#officeTableBody");
+                                            officeTableBody.empty();
+                                            data.forEach((office) => {
+                                                const campusName = office.campus.campus_name || "N/A";
+                                                const collegeName = office.college.college_name || "N/A";
+                                                officeTableBody.append(`
+                                                <tr>
+                                                    <td>${office.office_id}</td>
+                                                    <td>${office.office_name}</td>
+                                                    <td>${campusName}</td>
+                                                    <td>${collegeName}</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-warning" onclick="editOffice('${office.office_id}', '${office.office_name}', '${office.campus.campus_id}', '${office.college.college_id}')">Edit</button>
+                                                        <button class="btn btn-sm btn-danger" onclick="deleteOffice('${office.office_id}')">Delete</button>
+                                                    </td>
+                                                </tr>
+                                            `);
+                                            });
+                                        },
+                                    });
+                                },
+                            });
+                        },
+                    });
+                }
+
+                window.editCampus = function (campus_id, campus_name, campus_address) {
+                    $("#campusId").val(campus_id);
+                    $("#campusName").val(campus_name);
+                    $("#campusAddress").val(campus_address);
+                    $("#campusModal").modal("show");
+                };
+
+                window.deleteCampus = function (campus_id) {
+                    if (confirm("Are you sure you want to delete this campus?")) {
+                        $.ajax({
+                            url: baseURL + "campuses/" + campus_id + "/",
+                            method: "DELETE",
+                            success: function () {
+                                alert("Campus deleted successfully!");
+                                loadCampuses();
+                            },
+                            error: function (xhr, status, error) {
+                                alert("Error deleting campus: " + error);
+                            },
+                        });
+                    }
+                };
+
+                window.editCollege = function (college_id, college_name, campus_id) {
+                    $("#collegeId").val(college_id);
+                    $("#collegeName").val(college_name);
+                    $("#collegeCampus").val(campus_id);
+                    $("#collegeModal").modal("show");
+                };
+
+                window.deleteCollege = function (college_id) {
+                    if (confirm("Are you sure you want to delete this college?")) {
+                        $.ajax({
+                            url: baseURL + "colleges/" + college_id + "/",
+                            method: "DELETE",
+                            success: function () {
+                                alert("College deleted successfully!");
+                                loadColleges();
+                            },
+                            error: function (xhr, status, error) {
+                                alert("Error deleting college: " + error);
+                            },
+                        });
+                    }
+                };
+
+                window.editOffice = function (office_id, office_name, campus_id, college_id) {
+                    $("#officeId").val(office_id);
+                    $("#officeName").val(office_name);
+                    $("#officeCampus").val(campus_id);
+                    $("#officeCollege").val(college_id);
+                    $("#officeModal").modal("show");
+                };
+
+                window.deleteOffice = function (office_id) {
+                    if (confirm("Are you sure you want to delete this office?")) {
+                        $.ajax({
+                            url: baseURL + "offices/" + office_id + "/",
+                            method: "DELETE",
+                            success: function () {
+                                alert("Office deleted successfully!");
+                                loadOffices();
+                            },
+                            error: function (xhr, status, error) {
+                                alert("Error deleting office: " + error);
+                            },
+                        });
+                    }
+                };
+            });
+        </script>
+    </body>
+</html>

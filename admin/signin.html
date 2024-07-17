@@ -1,40 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GMRF Automation System</title>
-<link rel="stylesheet" href="../assets/css/styles-signin.css">
-<link rel="icon" href="../assets/img/logo.png" type="image/png">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-</head>
-<body>
-  <div class="container">
-    <div class="left-side">
-      <div class="logo-container">
-        <a href="../index.html">
-          <img src="../assets/img/logo.png" alt="Logo">
-        </a>
-        <h1>GMRF Automation System</h1>
-      </div>
-      <img src="../assets/img/bg3.png" alt="Background" class="background-image">
-    </div>
-    <div class="right-side">
-      <h2>Login as Admin</h2>
-      <!--<p><a href="signup.html">Don't have an account yet? Sign up</a></p>-->
-      <div class="form-container">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email"><br/>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password"><br/>
-        <!--<input type="checkbox" id="show-password">
-        <label for="show-password">Show password</label>-->
-        <!--<button type="button" id="login-btn" href="dashboard.html">Login</button>-->
-        <a id="login-btn" href="dashboard.html" class="button">Login</a>
-      </div>
-    </div>
-  </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>GMRF Automation System</title>
+        <link rel="stylesheet" href="../assets/css/styles-signin.css" />
+        <link rel="icon" href="../assets/img/logo.png" type="image/png" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <style>
+            .error {
+                color: red;
+                font-size: 0.9em;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="left-side">
+                <div class="logo-container">
+                    <a href="../index.html">
+                        <img src="../assets/img/logo.png" alt="Logo" />
+                    </a>
+                    <h1>GMRF Automation System</h1>
+                </div>
+                <img src="../assets/img/bg3.png" alt="Background" class="background-image" />
+            </div>
+            <div class="right-side">
+                <h2>Login as Admin</h2>
+                <!-- <p><a href="signup.html">Don't have an account yet? Sign up</a></p> -->
+                <div class="form-container">
+                    <form id="login-form" class="login-form">
+                        <div class="form-group">
+                            <label for="username">username</label>
+                            <input type="email" id="username" name="username" placeholder="Enter your username" required /><br />
+                            <span class="error" id="username-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required /><br />
+                            <span class="error" id="password-error"></span>
+                        </div>
+                        <!-- <input type="checkbox" id="show-password"> -->
+                        <!-- <label for="show-password">Show password</label> -->
+                        <button type="submit" id="login-btn" class="button">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-  
-</body>
+        <script>
+            $(document).ready(function () {
+                $("#login-form").submit(function (event) {
+                    event.preventDefault();
+
+                    // Clear previous error messages
+                    $(".error").text("");
+
+                    // Get form inputs
+                    var username = $("#username").val();
+                    var password = $("#password").val();
+
+                    // Validate form inputs
+                    var isValid = true;
+                    if (!username) {
+                        $("#username-error").text("Please enter your username.");
+                        isValid = false;
+                    }
+                    if (!password) {
+                        $("#password-error").text("Please enter your password.");
+                        isValid = false;
+                    }
+
+                    // If the form is valid, submit it via AJAX
+                    if (isValid) {
+                        var formData = {
+                            username: username,
+                            password: password,
+                        };
+
+                        $.ajax({
+                            type: "POST",
+                            url: "http://127.0.0.1:8000/auth/login/admin/",
+                            data: JSON.stringify(formData),
+                            contentType: "application/json",
+                            success: function (response) {
+                                localStorage.setItem("access", response.access);
+                                localStorage.setItem("refresh", response.refresh);
+                                alert("Login successful!");
+                                window.location.href = "dashboard.html";
+                            },
+                            error: function (xhr, status, error) {
+                                $("#username-error").text("Invalid username or password.");
+                                $("#password-error").text("");
+                            },
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
 </html>
